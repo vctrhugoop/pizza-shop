@@ -29,14 +29,15 @@ export function OrderTableFilter() {
   const customerName = searchParam.get('customerName')
   const status = searchParam.get('status')
 
-  const { register, handleSubmit, control } = useForm<OrderFiltersSchema>({
-    resolver: zodResolver(orderFiltersSchema),
-    defaultValues: {
-      orderId: orderId ?? '',
-      customerName: customerName ?? '',
-      status: status ?? 'all',
-    },
-  })
+  const { register, handleSubmit, control, reset } =
+    useForm<OrderFiltersSchema>({
+      resolver: zodResolver(orderFiltersSchema),
+      defaultValues: {
+        orderId: orderId ?? '',
+        customerName: customerName ?? '',
+        status: status ?? 'all',
+      },
+    })
 
   function handleFilter({ orderId, customerName, status }: OrderFiltersSchema) {
     setSearchParams((state) => {
@@ -61,6 +62,23 @@ export function OrderTableFilter() {
       state.set('page', '1')
 
       return state
+    })
+  }
+
+  function handleClearFilters() {
+    setSearchParams((state) => {
+      state.delete('orderId')
+      state.delete('customerName')
+      state.delete('status')
+      state.set('page', '1')
+
+      return state
+    })
+
+    reset({
+      orderId: '',
+      customerName: '',
+      status: 'all',
     })
   }
 
@@ -115,7 +133,12 @@ export function OrderTableFilter() {
         Filtrar resultados
       </Button>
 
-      <Button type="button" variant="outline" size="xs">
+      <Button
+        type="button"
+        variant="outline"
+        size="xs"
+        onClick={handleClearFilters}
+      >
         <X className="mr-2 size-4" />
         Remover filtros
       </Button>
