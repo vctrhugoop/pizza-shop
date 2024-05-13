@@ -7,6 +7,7 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
@@ -82,10 +83,21 @@ export function RevenueChart() {
 
               <CartesianGrid vertical={false} className="stroke-muted" />
 
+              <Tooltip
+                labelClassName="text-[#888]"
+                formatter={(value) =>
+                  Number(value).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })
+                }
+              />
+
               <Line
                 type="linear"
                 strokeWidth={2}
                 dataKey="receipt"
+                name="Receita"
                 stroke="#B98413"
               />
             </LineChart>
