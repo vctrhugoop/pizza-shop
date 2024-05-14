@@ -34,8 +34,8 @@ export function RevenueChart() {
     queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
     queryFn: () =>
       getDailyRevenueInPeriod({
-        from: dateRange.from,
-        to: dateRange.to,
+        from: dateRange?.from,
+        to: dateRange?.to,
       }),
   })
 
